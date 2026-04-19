@@ -1,17 +1,559 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Krew Solutions — Engineering excellence in software</title>
+    <meta name="description" content="Krew Solutions builds rigorous, domain-driven software: from DDD toolkits in Python to algorithmic-trading systems in OCaml." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --navy-900: #0a1733;
+            --navy-800: #0f2147;
+            --navy-700: #17305f;
+            --navy-600: #1f3d78;
+            --navy-500: #2a4f96;
+            --burgundy-700: #6b1530;
+            --burgundy-600: #8b1e3f;
+            --burgundy-500: #a8274e;
+            --ink: #0b1224;
+            --fog: #e9ecf3;
+            --mist: #f5f7fb;
+            --rule: rgba(255, 255, 255, 0.08);
+            --muted: #a8b2c7;
+        }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Krew Solutions</title>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  </head>
-  <body role="document">
-    <ul>
-        <li><a href="./ascetic-ddd-python/">ascetic-ddd-python - toolkit and seedwork for a python DDD project</a></li>
-        <li><a href="./trading-ml/">trading-ml - an algorithmic-trading system written in OCaml</a></li>
-    </ul>
-  </body>
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--ink);
+            background: var(--mist);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 23, 51, 0.92);
+            backdrop-filter: saturate(180%) blur(14px);
+            -webkit-backdrop-filter: saturate(180%) blur(14px);
+            border-bottom: 1px solid var(--rule);
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .logo-mark {
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--navy-500) 0%, var(--burgundy-600) 100%);
+            border-radius: 6px;
+            position: relative;
+        }
+        .logo-mark::after {
+            content: "";
+            position: absolute;
+            inset: 6px;
+            border: 2px solid #fff;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 2px 0 0 0;
+        }
+        .nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav a {
+            color: var(--fog);
+            text-decoration: none;
+            font-size: 0.93rem;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+        .nav a:hover { color: #fff; }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(139, 30, 63, 0.22), transparent 55%),
+                radial-gradient(ellipse at 85% 75%, rgba(42, 79, 150, 0.35), transparent 55%),
+                linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 55%, var(--navy-700) 100%);
+            color: #fff;
+            padding: 7rem 0 8rem;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
+            pointer-events: none;
+        }
+        .hero .container { position: relative; }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.4rem 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #d7dcea;
+            margin-bottom: 1.75rem;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .eyebrow .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--burgundy-500);
+            box-shadow: 0 0 0 3px rgba(168, 39, 78, 0.25);
+        }
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            max-width: 22ch;
+            margin-bottom: 1.5rem;
+        }
+        h1 .accent {
+            color: transparent;
+            background: linear-gradient(90deg, #e6b3c2 0%, var(--burgundy-500) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .hero p.lede {
+            font-size: 1.15rem;
+            color: #c5cddb;
+            max-width: 62ch;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+        .cta-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.6rem;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: var(--burgundy-600);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--burgundy-500);
+            transform: translateY(-1px);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+        .btn-ghost:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Stats strip */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1px;
+            background: var(--rule);
+            border: 1px solid var(--rule);
+            margin-top: 5rem;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .stat {
+            background: rgba(10, 23, 51, 0.55);
+            padding: 1.6rem 1.4rem;
+        }
+        .stat .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.7rem;
+            font-weight: 500;
+            color: #fff;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .stat .num .sep { color: var(--burgundy-500); }
+        .stat .lbl {
+            font-size: 0.82rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Sections */
+        section.block {
+            padding: 6rem 0;
+        }
+        .section-head {
+            margin-bottom: 3.5rem;
+            max-width: 640px;
+        }
+        .section-label {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--burgundy-600);
+            margin-bottom: 0.9rem;
+        }
+        .section-label::before {
+            content: "";
+            display: inline-block;
+            width: 22px;
+            height: 1px;
+            background: var(--burgundy-600);
+            vertical-align: middle;
+            margin-right: 0.7rem;
+        }
+        h2 {
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            font-weight: 600;
+            color: var(--navy-900);
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+        }
+        .section-head p {
+            margin-top: 1rem;
+            color: #4a5674;
+            font-size: 1.05rem;
+        }
+
+        /* Projects */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .project {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 2.25rem;
+            background: #fff;
+            border: 1px solid #e2e7f1;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            overflow: hidden;
+        }
+        .project::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--navy-600) 0%, var(--burgundy-600) 100%);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .project:hover {
+            border-color: var(--navy-600);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px -22px rgba(15, 33, 71, 0.35);
+        }
+        .project:hover::before { opacity: 1; }
+        .project-tag {
+            align-self: flex-start;
+            padding: 0.25rem 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            background: rgba(139, 30, 63, 0.08);
+            color: var(--burgundy-700);
+            border-radius: 3px;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.03em;
+        }
+        .project h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--navy-900);
+            margin-bottom: 0.75rem;
+        }
+        .project p {
+            color: #4a5674;
+            font-size: 0.97rem;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+        .project .arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--navy-700);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .project .arrow svg {
+            transition: transform 0.2s ease;
+        }
+        .project:hover .arrow svg { transform: translateX(4px); }
+
+        /* Capabilities */
+        .capabilities-section {
+            background: var(--mist);
+            border-top: 1px solid #e2e7f1;
+            border-bottom: 1px solid #e2e7f1;
+        }
+        .capabilities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem 2.5rem;
+        }
+        .capability {
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--navy-800);
+            position: relative;
+        }
+        .capability:nth-child(even) { border-top-color: var(--burgundy-600); }
+        .capability h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--navy-900);
+            margin-bottom: 0.55rem;
+        }
+        .capability p {
+            font-size: 0.93rem;
+            color: #4a5674;
+        }
+
+        /* CTA */
+        .cta-band {
+            background:
+                radial-gradient(ellipse at 80% 50%, rgba(139, 30, 63, 0.35), transparent 60%),
+                linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 100%);
+            color: #fff;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        .cta-band h2 { color: #fff; margin-bottom: 1rem; }
+        .cta-band p {
+            color: #c5cddb;
+            max-width: 48ch;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-900);
+            color: var(--muted);
+            padding: 3rem 0 2.25rem;
+            font-size: 0.9rem;
+        }
+        .foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        footer .logo { opacity: 0.95; }
+        footer a { color: var(--fog); text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        @media (max-width: 640px) {
+            .hero { padding: 4.5rem 0 5rem; }
+            section.block { padding: 4rem 0; }
+            .nav ul { display: none; }
+            .stats { margin-top: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a href="#" class="logo">
+                <span class="logo-mark" aria-hidden="true"></span>
+                <span>KREW&nbsp;SOLUTIONS</span>
+            </a>
+            <ul>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <span class="eyebrow"><span class="dot"></span>Engineering studio</span>
+            <h1>Rigorous software for <span class="accent">domains that matter</span>.</h1>
+            <p class="lede">
+                We build durable systems where correctness is non-negotiable — from domain-driven
+                Python toolkits to algorithmic-trading engines in OCaml. Clear architecture, typed
+                interfaces, measurable outcomes.
+            </p>
+            <div class="cta-row">
+                <a class="btn btn-primary" href="#work">
+                    Explore our work
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a class="btn btn-ghost" href="#capabilities">Capabilities</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="num">DDD<span class="sep">·</span>TDD</span>
+                    <span class="lbl">Methodology</span>
+                </div>
+                <div class="stat">
+                    <span class="num">Python<span class="sep">·</span>OCaml</span>
+                    <span class="lbl">Core stack</span>
+                </div>
+                <div class="stat">
+                    <span class="num">100<span class="sep">%</span></span>
+                    <span class="lbl">Type-checked</span>
+                </div>
+                <div class="stat">
+                    <span class="num">OSS</span>
+                    <span class="lbl">Open by default</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="block" id="work">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-label">Selected work</span>
+                <h2>Open-source projects we actively maintain.</h2>
+                <p>Each project represents a different facet of our practice — from architectural scaffolding to
+                performance-critical domain engines.</p>
+            </div>
+            <div class="projects">
+                <a class="project" href="./ascetic-ddd-python/">
+                    <span class="project-tag">PYTHON · DDD</span>
+                    <h3>ascetic-ddd-python</h3>
+                    <p>A disciplined toolkit and seedwork for domain-driven Python projects. Aggregates,
+                    repositories, unit-of-work, and integration-ready infrastructure.</p>
+                    <span class="arrow">
+                        View project
+                        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+                <a class="project" href="./trading-ml/">
+                    <span class="project-tag">OCAML · FINTECH</span>
+                    <h3>trading-ml</h3>
+                    <p>An algorithmic-trading system written in OCaml. Statically verified strategies,
+                    deterministic simulation, and low-latency execution.</p>
+                    <span class="arrow">
+                        View project
+                        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="block capabilities-section" id="capabilities">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-label">Capabilities</span>
+                <h2>What we bring to every engagement.</h2>
+            </div>
+            <div class="capabilities">
+                <div class="capability">
+                    <h4>Domain-Driven Design</h4>
+                    <p>Bounded contexts, ubiquitous language, and aggregate modelling grounded in business reality.</p>
+                </div>
+                <div class="capability">
+                    <h4>Type-Driven Development</h4>
+                    <p>Static guarantees over runtime hope. OCaml, typed Python, and contract-first interfaces.</p>
+                </div>
+                <div class="capability">
+                    <h4>Algorithmic Systems</h4>
+                    <p>Deterministic simulation, back-tested strategies, and production-grade execution pipelines.</p>
+                </div>
+                <div class="capability">
+                    <h4>Architectural Seedwork</h4>
+                    <p>Reusable scaffolding that shortens time-to-production without locking teams into opinions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-band" id="contact">
+        <div class="container">
+            <h2>Have a problem worth engineering?</h2>
+            <p>We take on a small number of projects each year. If you value correctness over velocity
+            theatre, we should talk.</p>
+            <a class="btn btn-primary" href="mailto:emacsway@gmail.com">Get in touch</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container foot">
+            <a href="#" class="logo">
+                <span class="logo-mark" aria-hidden="true"></span>
+                <span>KREW&nbsp;SOLUTIONS</span>
+            </a>
+            <span>&copy; 2026 Krew Solutions. Crafted with rigor.</span>
+        </div>
+    </footer>
+</body>
 </html>
